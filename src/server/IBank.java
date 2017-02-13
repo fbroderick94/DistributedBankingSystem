@@ -15,7 +15,7 @@ public interface IBank extends Remote{
 
 	public void withdraw(int accountnum, int amount, long sessionID) throws RemoteException, InvalidSession;
 
-	public int inquiry(int accountnum, long sessionID) throws RemoteException, InvalidSession;
+	public double inquiry(int accountnum, long sessionID) throws RemoteException, InvalidSession;
 
 	public IStatement getStatement(Date from, Date to, long sessionID) throws RemoteException, InvalidSession;
 

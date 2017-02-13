@@ -5,7 +5,7 @@ public class Account {
 	private int accIncrementer = 10000;
 	private String firstname, surname, password, username;
 	private int accountNum = 0;
-	private int balance = 0;
+	private double balance = 0;
 	
 	public Account(String fname, String sname, String pass)
 	{
@@ -23,13 +23,28 @@ public class Account {
 		return this.username;
 	}
 	
-	public int getBal()
+	public double getBal()
 	{
 		return this.balance;
+	}
+	
+	public void setBal(double bal)
+	{
+		this.balance = bal;
 	}
 	
 	public int getAccountNum()
 	{
 		return this.accountNum;
+	}
+	
+	public boolean isPasswordValid(String pass)
+	{
+		if(pass == this.password){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 }
