@@ -9,11 +9,13 @@ public class Transaction implements Serializable {
 	private Date date;
 	private int accountnum;
 	private boolean transactionType;
+	private double amount;
 	
-	public Transaction(int accNum, boolean type)
+	public Transaction(int accNum, boolean type, double amt)
 	{
 		this.accountnum = accNum;
 		this.transactionType = type;
+		this.amount = amt;
 	}
 
 	public Date getDate() {

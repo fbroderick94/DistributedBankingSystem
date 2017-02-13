@@ -17,7 +17,7 @@ public interface IBank extends Remote{
 
 	public double inquiry(int accountnum, long sessionID) throws RemoteException, InvalidSession;
 
-	public IStatement getStatement(Date from, Date to, long sessionID) throws RemoteException, InvalidSession;
+	public IStatement getStatement(int accountNum, Date from, Date to, long sessionID) throws RemoteException, InvalidSession;
 
 
 
