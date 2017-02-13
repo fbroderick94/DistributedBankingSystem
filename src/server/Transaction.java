@@ -18,6 +18,10 @@ public class Transaction implements Serializable {
 		this.amount = amt;
 	}
 
+	public double getAmount() {
+		return amount;
+	}
+
 	public Date getDate() {
 		return date;
 	}

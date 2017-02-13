@@ -3,11 +3,13 @@ package client;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Date;
 
 import exception.InvalidLogin;
 import exception.InvalidSession;
 import server.Bank;
 import server.IBank;
+import server.IStatement;
 
 
 public class ATM {
@@ -112,7 +114,21 @@ public class ATM {
 			}
 			else if(args[2]=="statement")
 			{
-	
+				accNum = Integer.parseInt(args[3]);
+				
+				Date from = new Date(args[4]);
+				Date to = new Date(args[5]);
+				
+				try {
+					IStatement statement = bank.getStatement(accNum, from, to, sessionID);
+					System.out.println("Statement for Account " + accNum);
+					System.out.println("-------------------------------------");
+					System.out.println("From " + from + " to " + to);
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				} catch (InvalidSession e) {
+					e.printStackTrace();
+				}
 			}
 			else
 			{
