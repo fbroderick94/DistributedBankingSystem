@@ -5,6 +5,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.UUID;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import exception.InvalidSession;
 public class Bank extends UnicastRemoteObject implements IBank {
 
 	private List<Account> Users;
+	private List<Session> sessions;
 	private boolean isAuthenticated = false;
 	
 	
@@ -22,6 +24,8 @@ public class Bank extends UnicastRemoteObject implements IBank {
 	public Bank() throws RemoteException
 	{
 		super();
+		Users = new ArrayList<>();
+		sessions = new ArrayList<>();
 	}
 	
 	@Override
@@ -35,8 +39,10 @@ public class Bank extends UnicastRemoteObject implements IBank {
 				{
 					isAuthenticated = true;
 					String sID = UUID.randomUUID().toString();
+					Users.get(i).setSessionID(sID);
 					//System.out.println("uuid = " + sID);
 					Session session = new Session(sID);
+					sessions.add(session);
 					return Long.parseLong(sID);
 				}
 				else{
@@ -50,30 +56,39 @@ public class Bank extends UnicastRemoteObject implements IBank {
 
 	@Override
 	public void deposit(int accountnum, int amount, long sessionID) throws RemoteException, InvalidSession {
-		if(isAuthenticated)
+		Account acc = Users.get(getAccount(accountnum));
+		
+		if(isAuthenticated && checkActiveSession(acc))
 		{
-			Account acc = Users.get(getAccount(accountnum));
 			double currentBalance = acc.getBal() + amount;
 			acc.setBal(currentBalance);
+			System.out.println("€" + amount + " deposited to account " + accountnum);
+			
 		}
 
 	}
 
 	@Override
 	public void withdraw(int accountnum, int amount, long sessionID) throws RemoteException, InvalidSession {
-		if(isAuthenticated)
+		
+		Account acc = Users.get(getAccount(accountnum));
+		
+		if(isAuthenticated && checkActiveSession(acc))
 		{
-			Account acc = Users.get(getAccount(accountnum));
+			
 			double currentBalance = acc.getBal() - amount;
 			acc.setBal(currentBalance);
+			System.out.println("€" + amount + " withdrawn from account " + accountnum);
 		}
 	}
 
 	@Override
 	public double inquiry(int accountnum, long sessionID) throws RemoteException, InvalidSession {
-		if(isAuthenticated)
+		
+		Account acc = Users.get(getAccount(accountnum));
+		
+		if(isAuthenticated && checkActiveSession(acc))
 		{
-			Account acc = Users.get(getAccount(accountnum));
 			return acc.getBal();
 		}
 		return 0;
@@ -100,21 +115,33 @@ public class Bank extends UnicastRemoteObject implements IBank {
 		return position;
 	}
 	
+	public boolean checkActiveSession(Account acc) throws InvalidSession
+	{
+		String sID = acc.getSessionID();
+		
+		for(int i=0; i<sessions.size();i++)
+		{
+			if(sessions.get(i).getID().equals(sID) && sessions.get(i).isSessionAlive())
+			{
+				System.out.println("Time Remaining: " + (sessions.get(i).getMaxTime()-sessions.get(i).getTimeAlive()));
+				return true;
+			}
+			else if(!sessions.get(i).isSessionAlive())
+			{
+				sessions.remove(i);
+			}
+		}
+		
+		throw new InvalidSession();
+	}
+	
 	
 	
 	public static void main(String args[]) throws Exception 
 	{
 
-		
-		if(System.getSecurityManager() == null){
-			System.setSecurityManager(new SecurityManager());
-		}
-		
-		
-		
 		try
 		{
-			
 			
 			IBank b = new Bank();
 			IBank stub = (IBank) UnicastRemoteObject.exportObject(b,0);

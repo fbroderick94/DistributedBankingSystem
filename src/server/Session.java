@@ -7,7 +7,7 @@ public class Session extends TimerTask
 {
 	private String ID;
 	private Timer timer;
-	private static final int MAX_TIME = 300;
+	private final int MAX_TIME = 300;
 	private int timeElapsed; 
 	private boolean isAlive;
 	
@@ -29,19 +29,31 @@ public class Session extends TimerTask
 	@Override
 	public void run() {
 		this.timeElapsed++;
-		if(isSessionExpired())
+		if(!isSessionAlive())
 		{
 			this.isAlive = false;
 			this.timer.cancel();
 		}
 	}
 	
-	public boolean isSessionExpired()
+	public boolean isSessionAlive()
 	{
 		if(this.timeElapsed == MAX_TIME)
-			return true;
-		else
 			return false;
+		else
+			return true;
+	}
+	
+	public String getID(){
+		return this.ID;
+	}
+	
+	public int getMaxTime(){
+		return this.MAX_TIME;
+	}
+	
+	public int getTimeAlive(){
+		return this.timeElapsed;
 	}
 	
 	

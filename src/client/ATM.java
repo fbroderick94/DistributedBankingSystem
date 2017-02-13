@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+import exception.InvalidLogin;
 import exception.InvalidSession;
 import server.Bank;
 import server.IBank;
@@ -11,7 +12,7 @@ import server.IBank;
 
 public class ATM {
 
-	private static int sessionID = 0;
+	private static long sessionID = 0;
 	private static IBank bank;
 	
 	public static void main(String args[]){
@@ -39,10 +40,18 @@ public class ATM {
 			{
 				String username = args[3];
 				String password = args[4];
-				//sessionID = bank.login(username, password)
+				try {
+					sessionID = bank.login(username, password);
+				} catch (RemoteException e) {
+					
+					e.printStackTrace();
+				} catch (InvalidLogin e) {
+					
+					e.printStackTrace();
+				}
 				
 				
-				System.out.println(username + " has successfully logged in.");
+				System.out.println(username + " has successfully logged in. Your session will expire in 5 minutes!");
 			}
 			else if(args[2]=="deposit")
 			{
@@ -60,7 +69,7 @@ public class ATM {
 					e.printStackTrace();
 				}
 				
-				System.out.println("€" + value + " deposited from account " + accNum);
+				
 				
 			}
 			else if(args[2]=="withdraw")
@@ -79,7 +88,7 @@ public class ATM {
 					e.printStackTrace();
 				}
 				
-				System.out.println("€" + value + " withdrawn from account " + accNum);
+				
 			}
 			else if(args[2]=="inquiry")
 			{
@@ -90,6 +99,7 @@ public class ATM {
 				double balance=0.0;
 				try {
 					balance = bank.inquiry(accNum, sessionID);
+					
 				} catch (RemoteException e) {
 					
 					e.printStackTrace();
