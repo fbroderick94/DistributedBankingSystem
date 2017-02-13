@@ -14,6 +14,7 @@ import exception.InvalidSession;
 
 public class Bank extends UnicastRemoteObject implements IBank {
 
+
 	private List<Account> Users;
 	private List<Session> sessions;
 	private boolean isAuthenticated = false;
