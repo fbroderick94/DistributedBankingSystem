@@ -7,9 +7,9 @@ import java.util.Date;
 
 import exception.InvalidLogin;
 import exception.InvalidSession;
+import interfaces.IBank;
+import interfaces.IStatement;
 import server.Bank;
-import server.IBank;
-import server.IStatement;
 
 
 public class ATM {
