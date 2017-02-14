@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import exception.InvalidLogin;
 import exception.InvalidSession;
@@ -76,11 +77,14 @@ public class Bank extends UnicastRemoteObject implements IBank {
 				{
 					isAuthenticated = true;
 					System.out.println(username + " has successfully logged in. Your session will expire in 5 minutes!");
-					String sID = UUID.randomUUID().toString();
+					long range = 1234567L;
+					Random r = new Random();
+					long number = (long)(r.nextDouble()*range);
+					String sID = String.valueOf(number);
 					Users.get(i).setSessionID(sID);
 					Session session = new Session(sID);
 					sessions.add(session);
-					return Long.parseLong(sID);
+					return number;
 				}
 				else{
 					throw new InvalidLogin();
