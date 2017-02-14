@@ -1,5 +1,6 @@
 package server;
 
+import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -39,11 +40,14 @@ public class Bank extends UnicastRemoteObject implements IBank {
 			System.setProperty("java.security.policy", "file:/Users/fergalbroderick/Documents/workspace/DistributedBankingSystem/src/server.policy");
             System.setSecurityManager(new SecurityManager());
             System.out.println("Security Manager Set");
+            
+            
 
 			String name = "Bank";
-            IBank myBank = new Bank();
+            IBank b = new Bank();
+           
             Registry registry = LocateRegistry.getRegistry(Integer.parseInt(args[0]));
-            registry.rebind(name, myBank);
+            registry.rebind(name, b);
 	        System.out.println("Bank bound");
 		}
 		catch(Exception ex)
@@ -65,6 +69,7 @@ public class Bank extends UnicastRemoteObject implements IBank {
 				if(Users.get(i).isPasswordValid(password))
 				{
 					isAuthenticated = true;
+					System.out.println(username + " has successfully logged in. Your session will expire in 5 minutes!");
 					String sID = UUID.randomUUID().toString();
 					Users.get(i).setSessionID(sID);
 					Session session = new Session(sID);

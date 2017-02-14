@@ -28,7 +28,7 @@ public class ATM {
 			
 			String name = "Bank";
 			Registry registry = LocateRegistry.getRegistry(args[0], Integer.parseInt(args[1]));
-			bank = (Bank) registry.lookup(name);
+			bank = (IBank) registry.lookup(name);
 			System.out.println("*****Client Connected******");
 			
 		}
@@ -39,7 +39,7 @@ public class ATM {
 		}
 			
 		
-		if(args[2]=="login")
+		if(args[2].equals("login"))
 			{
 				String username = args[3];
 				String password = args[4];
@@ -54,9 +54,9 @@ public class ATM {
 				}
 				
 				
-				System.out.println(username + " has successfully logged in. Your session will expire in 5 minutes!");
+				
 			}
-			else if(args[2]=="deposit")
+			else if(args[2].equals("deposit"))
 			{
 				
 				accNum = Integer.parseInt(args[3]);
@@ -75,7 +75,7 @@ public class ATM {
 				
 				
 			}
-			else if(args[2]=="withdraw")
+			else if(args[2].equals("withdraw"))
 			{
 			
 				accNum = Integer.parseInt(args[3]);
@@ -93,7 +93,7 @@ public class ATM {
 				
 				
 			}
-			else if(args[2]=="inquiry")
+			else if(args[2].equals("inquiry"))
 			{
 	
 				accNum = Integer.parseInt(args[3]);
@@ -113,7 +113,7 @@ public class ATM {
 				
 				System.out.println("Account No. " + accNum + " has a balance of €" + balance);
 			}
-			else if(args[2]=="statement")
+			else if(args[2].equals("statement"))
 			{
 				accNum = Integer.parseInt(args[3]);
 				
