@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Account {
 
-	private int accIncrementer = 10000;
+	private int accIncrementer = 111;
 	private String firstname, surname, password, username;
 	private int accountNum = 0;
 	private double balance = 0;
@@ -61,7 +61,7 @@ public class Account {
 	
 	public boolean isPasswordValid(String pass)
 	{
-		if(pass == this.password){
+		if(pass.equals(this.password)){
 			return true;
 		}
 		else{
