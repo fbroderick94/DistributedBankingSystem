@@ -19,16 +19,17 @@ public class ATM {
 	
 	public static void main(String args[]){
 		
-		System.setSecurityManager(new SecurityManager());
+		System.setProperty("java.security.policy", "file:/Users/fergalbroderick/Documents/workspace/DistributedBankingSystem/src/client.policy");
+        System.setSecurityManager(new SecurityManager());
 		
 		int accNum = 0;
 		int value = 0;
 		try{
 			
 			String name = "Bank";
-			Registry registry = LocateRegistry.getRegistry(args[0]);
+			Registry registry = LocateRegistry.getRegistry(args[0], Integer.parseInt(args[1]));
 			bank = (Bank) registry.lookup(name);
-			
+			System.out.println("*****Client Connected******");
 			
 		}
 		catch(Exception ex)
@@ -49,7 +50,7 @@ public class ATM {
 					e.printStackTrace();
 				} catch (InvalidLogin e) {
 					
-					e.printStackTrace();
+					System.out.println(e.getMessage());
 				}
 				
 				
@@ -68,7 +69,7 @@ public class ATM {
 					e.printStackTrace();
 				} catch (InvalidSession e) {
 					
-					e.printStackTrace();
+					System.out.println(e.getMessage());
 				}
 				
 				
@@ -87,7 +88,7 @@ public class ATM {
 					e.printStackTrace();
 				} catch (InvalidSession e) {
 					
-					e.printStackTrace();
+					System.out.println(e.getMessage());
 				}
 				
 				
@@ -107,7 +108,7 @@ public class ATM {
 					e.printStackTrace();
 				} catch (InvalidSession e) {
 					
-					e.printStackTrace();
+					System.out.println(e.getMessage());
 				}
 				
 				System.out.println("Account No. " + accNum + " has a balance of €" + balance);
@@ -124,10 +125,14 @@ public class ATM {
 					System.out.println("Statement for Account " + accNum);
 					System.out.println("-------------------------------------");
 					System.out.println("From " + from + " to " + to);
+					for (Object s : statement.getTransactions())
+					{
+						System.out.println(s);
+					}
 				} catch (RemoteException e) {
 					e.printStackTrace();
 				} catch (InvalidSession e) {
-					e.printStackTrace();
+					System.out.println(e.getMessage());
 				}
 			}
 			else

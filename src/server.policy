@@ -1,0 +1,3 @@
+grant codeBase "file:/Users/fergalbroderick/Documents/workspace/DistributedBankingSystem/src/" {
+    permission java.security.AllPermission;
+};

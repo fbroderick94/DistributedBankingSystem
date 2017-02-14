@@ -49,7 +49,9 @@ public class Statement implements IStatement, Serializable {
 			if((t.get(i).getDate().equals(this.getStartDate()) || t.get(i).getDate().after(this.getStartDate())) && (t.get(i).getDate().equals(this.getEndDate()) || t.get(i).getDate().before(this.getEndDate()))){
 				transactions.add(t.get(i));
 			}
+			
 		}
+		
 		return this.transactions;
 	}
 

@@ -24,16 +24,24 @@ public class Bank extends UnicastRemoteObject implements IBank {
 		super();
 		Users = new ArrayList<>();
 		sessions = new ArrayList<>();
+		
+		Users.add(new Account("Joe", "Bloggs", "123"));
+		Users.add(new Account("Mary", "Smith", "123"));
+		Users.add(new Account("Tom", "Kelly", "123"));
 	}
 	
 	public static void main(String args[]) throws Exception 
 	{
 		try
 		{	
-			IBank b = new Bank();
-			IBank stub = (IBank) UnicastRemoteObject.exportObject(b,0);
-			Registry registry = LocateRegistry.getRegistry();
-	        registry.rebind("Bank", stub);
+			System.setProperty("java.security.policy", "file:/Users/fergalbroderick/Documents/workspace/DistributedBankingSystem/src/server.policy");
+            System.setSecurityManager(new SecurityManager());
+            System.out.println("Security Manager Set");
+
+			String name = "Bank";
+            IBank myBank = new Bank();
+            Registry registry = LocateRegistry.getRegistry(Integer.parseInt(args[0]));
+            registry.rebind(name, myBank);
 	        System.out.println("Bank bound");
 		}
 		catch(Exception ex)
