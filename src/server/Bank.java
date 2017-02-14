@@ -28,9 +28,15 @@ public class Bank extends UnicastRemoteObject implements IBank {
 		Users = new ArrayList<>();
 		sessions = new ArrayList<>();
 		
-		Users.add(new Account("Joe", "Bloggs", "123"));
-		Users.add(new Account("Mary", "Smith", "123"));
-		Users.add(new Account("Tom", "Kelly", "123"));
+		Account acc1 = new Account("Joe", "Bloggs", "123");
+		Account acc2 = new Account("Mary", "Smith", "123");
+		Account acc3 = new Account("Tom", "Kelly", "123");
+		
+		System.out.println("Acc Num: " + acc1.getAccountNum() + "Username: " + acc1.getUsername());
+		System.out.println("Acc Num: " + acc2.getAccountNum() + "Username: " + acc2.getUsername());
+		Users.add(acc1);
+		Users.add(acc2);
+		Users.add(acc3);
 	}
 	
 	public static void main(String args[]) throws Exception 
