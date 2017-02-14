@@ -70,7 +70,7 @@ public class Bank extends UnicastRemoteObject implements IBank {
 		
 		for(int i=0; i<Users.size();i++)
 		{
-			if(Users.get(i).getUsername() == username)
+			if(Users.get(i).getUsername().equals(username))
 			{
 				if(Users.get(i).isPasswordValid(password))
 				{

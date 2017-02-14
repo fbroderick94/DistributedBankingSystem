@@ -14,13 +14,14 @@ public class Account {
 	
 	public Account(String fname, String sname, String pass)
 	{
+		this.accountNum = accIncrementer;
+		accIncrementer++;
 		this.firstname = fname;
 		this.surname = sname;
 		this.password = pass;
 		this.transactions = new ArrayList<Transaction>();
 		this.username = firstname.charAt(0) + surname;
-		this.accountNum = accIncrementer;
-		accIncrementer++;
+		
 	}
 	
 	
