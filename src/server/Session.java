@@ -7,7 +7,7 @@ public class Session extends TimerTask
 {
 	private String ID;
 	private Timer timer;
-	private final int MAX_TIME = 300;
+	private final int MAX_TIME = 300000;
 	private int timeElapsed; 
 	private boolean isAlive;
 	

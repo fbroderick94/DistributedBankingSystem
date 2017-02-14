@@ -32,6 +32,7 @@ public class Bank extends UnicastRemoteObject implements IBank {
 		Account acc1 = new Account("Joe", "Bloggs", "123");
 		Account acc2 = new Account("Mary", "Smith", "123");
 		Account acc3 = new Account("Tom", "Kelly", "123");
+		acc1.setBal(200.00);
 		
 		System.out.println("Acc Num: " + acc1.getAccountNum() + "Username: " + acc1.getUsername());
 		System.out.println("Acc Num: " + acc2.getAccountNum() + "Username: " + acc2.getUsername());
